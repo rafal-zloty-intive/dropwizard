@@ -21,6 +21,7 @@
         <maven.site.skip>true</maven.site.skip>
         <maven.site.deploy.skip>true</maven.site.deploy.skip>
         <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+        <module.name>io.dropwizard.e2e</module.name>
     </properties>
 
     <dependencies>

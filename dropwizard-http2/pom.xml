@@ -16,6 +16,7 @@
         <!-- Default alpn-boot version. See <profiles> for specific profiles. -->
         <alpn-boot.version>8.1.13.v20181017</alpn-boot.version>
         <argLine>"-Xbootclasspath/p:/${user.home}/.m2/repository/org/mortbay/jetty/alpn/alpn-boot/${alpn-boot.version}/alpn-boot-${alpn-boot.version}.jar" -Duser.language=en -Duser.region=US</argLine>
+        <module.name>io.dropwizard.http2</module.name>
     </properties>
 
     <dependencies>

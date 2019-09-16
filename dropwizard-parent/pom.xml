@@ -26,6 +26,7 @@
         <maven.compiler.forceJavacCompilerUse>true</maven.compiler.forceJavacCompilerUse>
 
         <argLine>-Duser.language=en -Duser.region=US</argLine>
+        <module.name>io.dropwizard.parent</module.name>
     </properties>
 
     <profiles>
@@ -243,6 +244,9 @@
                         <manifest>
                             <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
                         </manifest>
+                        <manifestEntries>
+                            <Automatic-Module-Name>${module.name}</Automatic-Module-Name>
+                        </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
