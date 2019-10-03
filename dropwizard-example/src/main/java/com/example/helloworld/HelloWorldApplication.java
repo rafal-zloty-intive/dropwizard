@@ -2,6 +2,7 @@ package com.example.helloworld;
 
 import com.example.helloworld.auth.ExampleAuthenticator;
 import com.example.helloworld.auth.ExampleAuthorizer;
+import com.example.helloworld.auth.jwt.JwtCredentialAuthFilter;
 import com.example.helloworld.cli.RenderCommand;
 import com.example.helloworld.core.Person;
 import com.example.helloworld.core.Template;
@@ -20,7 +21,6 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
-import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
@@ -31,9 +31,12 @@ import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
+import java.util.Base64;
 import java.util.Map;
 
 public class HelloWorldApplication extends Application<HelloWorldConfiguration> {
+    private static final byte[] JWT_SECRET = Base64.getDecoder().decode("cXdlcnR5dWlvcGFzZGZnaGprbHp4Y3Zibm0xMjM0NTY=");
+
     public static void main(String[] args) throws Exception {
         new HelloWorldApplication().run(args);
     }
@@ -86,10 +89,12 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
         environment.healthChecks().register("template", new TemplateHealthCheck(template));
         environment.admin().addTask(new EchoTask());
         environment.jersey().register(DateRequiredFeature.class);
-        environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<User>()
+        environment.jersey().register(new AuthDynamicFeature(new JwtCredentialAuthFilter.Builder<User>()
+                .setJwtSecret(JWT_SECRET)
                 .setAuthenticator(new ExampleAuthenticator())
                 .setAuthorizer(new ExampleAuthorizer())
                 .setRealm("SUPER SECRET STUFF")
+                .setPrefix("Bearer")
                 .buildAuthFilter()));
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
