@@ -48,7 +48,7 @@ public class JwtCredentialAuthFilter<P extends Principal> extends AuthFilter<Jwt
      * eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBZG1pbmlzdHJhdG9yIn0.QsvPyc0Rg71GisxBV-kMPn3RTp8CSXBr2WHIMWWCRJA`.
      * Check if JWT is proper using the the HMACSHA256 algorithm.
      *
-     * @param header the value of the `Authorization` header or null if the header
+     * @param authorizationHeader the value of the `Authorization` header or null if the header
      *               is incorrect
      * @return a sub as {@link JwtCredentials}
      */
