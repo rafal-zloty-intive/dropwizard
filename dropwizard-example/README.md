@@ -25,15 +25,17 @@ of the PersonDAO in their constructors.
 
 As with all the modules the db example is wired up in the `initialize` function of the `HelloWorldApplication`.
 
-# Running The Application
-
-To test the example application run the following commands.
+# Building The Application 
 
 * To create the example, package the application using [Apache Maven](https://maven.apache.org/) from the root dropwizard directory.
 
         cd dropwizard
         ./mvnw package
         cd dropwizard-example
+
+# Running The Application
+
+To test the example application run the following commands.
 
 * To setup the h2 database run.
 
@@ -42,6 +44,8 @@ To test the example application run the following commands.
 * To run the server run.
 
         java -jar target/dropwizard-example-$DW_VERSION.jar server example.yml
+
+# Testing The Application
 
 * To hit the Hello World example (hit refresh a few times).
 
@@ -52,3 +56,26 @@ To test the example application run the following commands.
 	curl -H "Content-Type: application/json" -X POST -d '{"fullName":"Other Person","jobTitle":"Other Title"}' http://localhost:8080/people
 	
 	open http://localhost:8080/people
+
+# Dockerize The Application
+
+To create, run and test Docker image of the application run following commands.
+
+* To crate Docker image of the application build application as described in [building section](#building-the-application) and then run following command:
+
+    docker build -t dropwizard-example .
+
+* To find a built image.
+
+    docker images 
+
+* To run the application.
+
+    docker run -it -p 8080:8080 <docker_image_id>
+
+and in Docker console run:
+
+    java -jar dropwizard-example.jar db migrate example.yml
+    java -jar dropwizard-example.jar server example.yml
+ 
+* To test the application check [testing section](#testing-the-application)
